@@ -4,10 +4,10 @@
     <img class="cover" src="{{imageURL}}" />
     {{#if isCreatedByCurrUser}}
     <p>Likes: {{likes}}; Listened {{listened}} times</p>
-    <a href="#/remove/{{_id}}"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
-    <a href="#/listen/{{_id}}"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+    <a href="#/remove/{{objectId}}"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+    <a href="#/listen/{{objectId}}"><button type="button" class="btn btn-success mt-4">Listen</button></a>
       {{else}}
     <p>Likes: {{likes}}</p>
-    <a href="#/like/{{_id}}"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+    <a href="#/like/{{objectId}}"><button type="button" class="btn btn-primary mt-4">Like</button></a>
     {{/if}}
   </div>

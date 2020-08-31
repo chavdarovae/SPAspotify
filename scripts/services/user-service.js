@@ -4,27 +4,27 @@ const userService = (() => {
   }
 
   function saveSession(res) {
-    sessionStorage.setItem('username', res.username);
-    sessionStorage.setItem('authtoken', res._kmd.authtoken);
-    sessionStorage.setItem('creator', res._acl.creator);
+    sessionStorage.setItem('username', res['username']);
+    sessionStorage.setItem('authtoken', res['user-token']);
+    sessionStorage.setItem('creator', res['ownerId']);
   }
 
   function register(username, password) {
-    return kinvey.post('user', '', 'basic', {
+    return backendless.post('users', 'register', 'basic', {
       username,
       password
     })
   }
 
   function login(username, password) {
-    return kinvey.post('user', 'login', 'basic', {
-      username,
+    return backendless.post('users', 'login', 'basic', {
+      login : username,
       password
     });
   }
 
   function logout() {
-    return kinvey.post('user', '_logout', 'kinvey');
+    return backendless.get('users', 'logout', 'backendless');
   }
 
   return {

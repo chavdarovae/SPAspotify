@@ -25,9 +25,9 @@ handlers.registerUser = function (ctx) {
   let password = ctx.params.password;
 
   userService.register(username, password).then((res) => {
-    userService.saveSession(res);
+
     notifications.showInfo('User registration successful.');
-    ctx.redirect('#/home');
+    ctx.redirect('#/login');
   }).catch(function (err) {
     notifications.showError(err.responseJSON.description);
   });

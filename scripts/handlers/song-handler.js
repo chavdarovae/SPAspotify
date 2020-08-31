@@ -1,13 +1,10 @@
 handlers.getAllSongs = async function (ctx) {
   ctx.isAuth = userService.isAuth();
   ctx.username = sessionStorage.getItem('username');
-  let currCreator = sessionStorage.getItem('creator');
 
   try {
     ctx.songs = await songService.getAllSongs();
-    ctx.songs.forEach(song => {
-      song.isCreatedByCurrUser = currCreator === song._acl.creator;
-    });
+  
     ctx.loadPartials({
       header: '../templates/common/header.hbs',
       footer: '../templates/common/footer.hbs',
@@ -39,13 +36,14 @@ handlers.getCreateSong = function (ctx) {
 handlers.getMySongs = async function (ctx) {
   ctx.isAuth = userService.isAuth();
   ctx.username = sessionStorage.getItem('username');
+  let currUser = sessionStorage.getItem('creator');
 
   try {
     ctx.songs = await songService.getMySongs();
-    ctx.songs.forEach(song => {
-      song.isCreatedByCurrUser = true;
-    });
-
+    console.log(ctx.songs);
+    ctx.songs = ctx.songs.filter(song => song.ownerId === currUser);
+    console.log(ctx.songs);
+  
     ctx.loadPartials({
       header: '../templates/common/header.hbs',
       footer: '../templates/common/footer.hbs',

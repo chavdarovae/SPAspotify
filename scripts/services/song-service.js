@@ -1,7 +1,7 @@
 const songService = (() => {
 
   function createSong(title, artist, imageURL) {
-    return kinvey.post('appdata', 'songs', 'kinvey', {
+    return backendless.post('data', 'songs', 'backendless', {
       title,
       artist,
       imageURL,
@@ -11,23 +11,23 @@ const songService = (() => {
   }
 
   function getAllSongs() {
-    return kinvey.get('appdata', 'songs?query={}&sort={"likes":-1}', 'kinvey');
+    return backendless.get('data', 'songs', 'backendless');
   }
 
   function getMySongs() {
-    return kinvey.get('appdata', `songs?query={"_acl.creator":"${sessionStorage.getItem('creator')}"}`, 'kinvey');
+    return backendless.get('data', `songs?query={"_acl.creator":"${sessionStorage.getItem('creator')}"}`, 'backendless');
   }
 
   function removeSong(id) {
-    return kinvey.remove('appdata', `songs/${id}`, 'kinvey');
+    return backendless.remove('data', `songs/${id}`, 'backendless');
   }
 
   function getCurrSong(id) {
-    return kinvey.get('appdata', `songs/${id}`, 'kinvey');
+    return backendless.get('data', `songs/${id}`, 'backendless');
   }
 
   function updateSong(id, data) {
-    return kinvey.update('appdata', `songs/${id}`, 'kinvey', data);
+    return backendless.update('data', `songs/${id}`, 'backendless', data);
   }
 
   return {

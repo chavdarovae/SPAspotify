@@ -1,23 +1,23 @@
-const kinvey = (() => {
-  const BASE_URL = 'https://baas.kinvey.com/';
-  const APP_KEY = 'kid_rJIKLRNtN'; // APP KEY HERE
-  const APP_SECRET = '9a2d1bd1edec4d708e86818d5d7e70c2'; // APP SECRET HERE
+const backendless = (() => {
+  const applicationId = '78DE0410-AD96-29FB-FF6E-194CA0252E00';
+  const RESTApiKey = '6BF3E431-3FCF-4C13-B308-9333EA65B895';
 
   function makeAuth(auth) {
     if (auth == 'basic') {
       return {
-        'Authorization': `Basic ${btoa(APP_KEY + ':' + APP_SECRET)}`
+        'Content-Type': 'application/json'
       }
     } else {
       return {
-        'Authorization': `Kinvey ${sessionStorage.getItem('authtoken')}`
+        'Content-Type': 'application/json',
+        'user-token': `${sessionStorage.getItem('authtoken')}`
       }
     }
   }
 
   function makeRequest(method, collection, endpoint, auth) {
     return {
-      url: BASE_URL + collection + '/' + APP_KEY + '/' + endpoint,
+      url: `https://api.backendless.com/${applicationId}/${RESTApiKey}/${collection}/${endpoint}`,
       method,
       headers: makeAuth(auth)
     }
@@ -25,7 +25,7 @@ const kinvey = (() => {
 
   function post(collection, endpoint, auth, data) {
     let req = makeRequest('POST', collection, endpoint, auth);
-    req.data = data;
+    req.data = JSON.stringify(data);
     return $.ajax(req);
   }
 
@@ -36,7 +36,7 @@ const kinvey = (() => {
 
   function update(collection, endpoint, auth, data) {
     let req = makeRequest('PUT', collection, endpoint, auth);
-    req.data = data;
+    req.data = JSON.stringify(data);
     return $.ajax(req);
   }
 
